@@ -1,3 +1,65 @@
+// ── MENÚ HAMBURGUESA ──
+var menu    = document.querySelector('.hamburger');
+var menuppal = document.querySelector('.menuppal');
+var menuClose = document.querySelector('.menu-close');
+
+// Crear overlay dinámicamente
+var overlay = document.createElement('div');
+overlay.className = 'menu-overlay';
+document.body.appendChild(overlay);
+
+function abrirMenu() {
+  menu.classList.add('is-active');
+  menuppal.classList.add('is_active');
+  overlay.classList.add('is_active');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarMenu() {
+  menu.classList.remove('is-active');
+  menuppal.classList.remove('is_active');
+  overlay.classList.remove('is_active');
+  document.body.style.overflow = '';
+}
+
+function toggleMenu(event) {
+  event.preventDefault();
+  if (menuppal.classList.contains('is_active')) {
+    cerrarMenu();
+  } else {
+    abrirMenu();
+  }
+}
+
+menu.addEventListener('click', toggleMenu, false);
+menuClose.addEventListener('click', cerrarMenu, false);
+overlay.addEventListener('click', cerrarMenu, false);
+
+// Cerrar menú y navegar suavemente al hacer click en un link
+menuppal.querySelectorAll('a[href^="#"]').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    var targetId = this.getAttribute('href').slice(1);
+    var target = document.getElementById(targetId);
+    cerrarMenu();
+    if (target) {
+      setTimeout(function() {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  });
+});
+
+//Solución con jQUery
+/*$(document).ready(function(){
+	$('.hamburger').click(function() {
+		$('.hamburger').toggleClass('is-active');
+		$('.menuresponsive').toggleClass('is-active');
+		return false;
+	});
+});*/
+
+
 // ── BANCO DE PREGUNTAS ──
 const preguntas = [
   {
